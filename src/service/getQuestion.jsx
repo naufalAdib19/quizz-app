@@ -4,6 +4,7 @@ import axios from "axios";
 import arrayShuffler from "../helper/shufleAnswer";
 import Results from "../components/results";
 import Loaders from "../components/loaders";
+import PausedPage from "../components/soalke5";
 
 const GetQuestion = () => {
     const [data, setData] = useState([]);
@@ -11,12 +12,13 @@ const GetQuestion = () => {
     const [correctAnswer, setCorrectAnswer] = useState(0);
     const [finalData, setFinalData] = useState([]);
     const [finalAnswers, setFinalAnswers] = useState(null);
+    const [isMiddle, setIsMiddle] = useState(true);
     const {idx, setIdx, maxQuestion, setMaxQuestion} = useContext(Indexer);
     const score = (correctAnswer) / (maxQuestion) * 100;   
 
     //Fetching Data dari API
     useEffect(() => { 
-        axios.get('https://opentdb.com/api.php?amount=5')
+        axios.get('https://opentdb.com/api.php?amount=10')
         .then(res => {
             setData(res.data.results)
             setLoading(false)
@@ -24,7 +26,14 @@ const GetQuestion = () => {
         }).catch(err => {
             console.log(err)
         })
-    }, []); 
+    }, []);
+
+    useEffect(() => {
+        if(idx == 5) {
+            setIsMiddle(false);
+        } 
+    }, [idx])
+
 
     //Inisialisasi data dan menyimpan data ke dalam local storage
     useEffect(() => {       
@@ -47,6 +56,10 @@ const GetQuestion = () => {
         return <Results correct={correctAnswer} wrong={maxQuestion - correctAnswer} score={Math.round(score)}/>
     }
 
+    if(idx === 4.5) {
+        return <PausedPage/>
+    }
+
     return(
         <> 
             <div className="question font-semibold text-xl mb-4">
@@ -61,8 +74,9 @@ const GetQuestion = () => {
                                 className="border border-slate-300 rounded px-2 py-2 hover:bg-slate-50 cursor-pointer" 
                                 key={index} 
                                 onClick={() => {
-                                    setIdx((prev) => prev + 1);
+                                    idx === 4 ? setIdx(4.5) : setIdx((prev) => prev + 1);
                                     value == finalData[idx]?.correct_answer ? setCorrectAnswer((prev) => prev + 1) : null;
+
                                 }}
                                 >
                                     {value}

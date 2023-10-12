@@ -16,7 +16,7 @@ const QuizPage = () => {
                     <div className="flex bg-blue-300 gap-x-3 px-3 py-2 rounded items-center max-w-[140px]">
                         <p className="font-semibold text-blue-800">Time Left</p>
                         <p className="bg-gray-900 px-2 py-1 text-white rounded">
-                            {idx > maxQuestion - 1 ? '-' : <CountDown seconds={30}/>}
+                            {idx > maxQuestion - 1 || idx == 5 ? '-' : <CountDown seconds={30}/>}
                         </p>
                     </div>
                </div>
@@ -29,11 +29,15 @@ const QuizPage = () => {
                 </div>       
                </div>
                <hr className="border-b-[1px] border-slate-300 w-full"/>
-               <div className="footer px-8 py-4">
-                    {
-                        idx > maxQuestion - 1 ? "Results" : `${idx + 1} of ${maxQuestion} Questions`
-                    }
-               </div>
+               {
+                idx === 4.5 ? 'ngopi bang!' :              
+                <div className="footer px-8 py-4">
+                {
+                    idx > maxQuestion - 1 ? "Results" : `${idx + 1} of ${maxQuestion} Questions`
+                }
+                </div>
+               }
+  
             </div>
         </div>
     )

@@ -1,3 +1,4 @@
+//algoritma fisher-yates
 function arrayShuffler(correct_answer, incorrect_answer){
     const correctAnswer = correct_answer || '';
     const incorrectAnswer = incorrect_answer || [];
