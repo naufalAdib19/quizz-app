@@ -12,7 +12,7 @@ const PausedPage = () => {
     return(
         <div>
             <button type="button" className="bg-sky-500 px-3 py-2 rounded-md" onClick={clickHandler}>
-                Lanjut bang!
+                Lanjut bang! gg
             </button>
         </div>
     )
